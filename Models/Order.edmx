@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RestaurantModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderDate" Type="datetime" Nullable="false" />
+          <Property Name="RestaurantID" Type="int" Nullable="false" />
+          <Property Name="MenuItemID" Type="int" Nullable="false" />
+          <Property Name="ItemQuantity" Type="int" Nullable="false" />
+          <Property Name="OrderAmount" Type="float" Nullable="false" />
+          <Property Name="DiningTableID" Type="int" Nullable="false" />
+        </EntityType>
+        <Function Name="USP_GetAllOrders" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="USP_InsertOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OrderID" Type="int" Mode="In" />
+          <Parameter Name="OrderDate" Type="datetime" Mode="In" />
+          <Parameter Name="RestaurantID" Type="int" Mode="In" />
+          <Parameter Name="MenuItemID" Type="int" Mode="In" />
+          <Parameter Name="ItemQuantity" Type="int" Mode="In" />
+          <Parameter Name="OrderAmount" Type="float" Mode="In" />
+          <Parameter Name="DiningTableID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="USP_OrderTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OrderID" Type="int" Mode="In" />
+          <Parameter Name="OrderDate" Type="datetime" Mode="In" />
+          <Parameter Name="RestaurantID" Type="int" Mode="In" />
+          <Parameter Name="MenuItemID" Type="int" Mode="In" />
+          <Parameter Name="ItemQuantity" Type="int" Mode="In" />
+          <Parameter Name="OrderAmount" Type="float" Mode="In" />
+          <Parameter Name="DiningTableID" Type="int" Mode="In" />
+          <Parameter Name="OperationType" Type="nvarchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="RestaurantModelStoreContainer">
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RestaurantModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RestaurantID" Type="Int32" Nullable="false" />
+          <Property Name="MenuItemID" Type="Int32" Nullable="false" />
+          <Property Name="ItemQuantity" Type="Int32" Nullable="false" />
+          <Property Name="OrderAmount" Type="Double" Nullable="false" />
+          <Property Name="DiningTableID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="RestaurantEntities3" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <FunctionImport Name="USP_GetAllOrders" ReturnType="Collection(RestaurantModel.USP_GetAllOrders_Result)" />
+          <FunctionImport Name="USP_OrderTable">
+            <Parameter Name="OrderID" Mode="In" Type="Int32" />
+            <Parameter Name="OrderDate" Mode="In" Type="DateTime" />
+            <Parameter Name="RestaurantID" Mode="In" Type="Int32" />
+            <Parameter Name="MenuItemID" Mode="In" Type="Int32" />
+            <Parameter Name="ItemQuantity" Mode="In" Type="Int32" />
+            <Parameter Name="OrderAmount" Mode="In" Type="Double" />
+            <Parameter Name="DiningTableID" Mode="In" Type="Int32" />
+            <Parameter Name="OperationType" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="USP_InsertOrder">
+            <Parameter Name="OrderID" Mode="In" Type="Int32" />
+            <Parameter Name="OrderDate" Mode="In" Type="DateTime" />
+            <Parameter Name="RestaurantID" Mode="In" Type="Int32" />
+            <Parameter Name="MenuItemID" Mode="In" Type="Int32" />
+            <Parameter Name="ItemQuantity" Mode="In" Type="Int32" />
+            <Parameter Name="OrderAmount" Mode="In" Type="Double" />
+            <Parameter Name="DiningTableID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Orders_USP_GetAllOrders" EntitySet="Orders" ReturnType="Collection(RestaurantModel.Order)" />
+          <FunctionImport Name="Order_USP_InsertOrder" EntitySet="Orders" ReturnType="Collection(RestaurantModel.Order)">
+            <Parameter Name="OrderID" Mode="In" Type="Int32" />
+            <Parameter Name="OrderDate" Mode="In" Type="DateTime" />
+            <Parameter Name="RestaurantID" Mode="In" Type="Int32" />
+            <Parameter Name="MenuItemID" Mode="In" Type="Int32" />
+            <Parameter Name="ItemQuantity" Mode="In" Type="Int32" />
+            <Parameter Name="OrderAmount" Mode="In" Type="Double" />
+            <Parameter Name="DiningTableID" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="USP_GetAllOrders_Result">
+          <Property Type="Int32" Name="OrderID" Nullable="false" />
+          <Property Type="DateTime" Name="OrderDate" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="RestaurantID" Nullable="false" />
+          <Property Type="Int32" Name="MenuItemID" Nullable="false" />
+          <Property Type="Int32" Name="ItemQuantity" Nullable="false" />
+          <Property Type="Double" Name="OrderAmount" Nullable="false" />
+          <Property Type="Int32" Name="DiningTableID" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RestaurantModelStoreContainer" CdmEntityContainer="RestaurantEntities3">
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="RestaurantModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="RestaurantID" ColumnName="RestaurantID" />
+                <ScalarProperty Name="MenuItemID" ColumnName="MenuItemID" />
+                <ScalarProperty Name="ItemQuantity" ColumnName="ItemQuantity" />
+                <ScalarProperty Name="OrderAmount" ColumnName="OrderAmount" />
+                <ScalarProperty Name="DiningTableID" ColumnName="DiningTableID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="RestaurantModel.Order">
+              <ModificationFunctionMapping>
+                <InsertFunction FunctionName="RestaurantModel.Store.USP_InsertOrder">
+                  <ScalarProperty Name="DiningTableID" ParameterName="DiningTableID" />
+                  <ScalarProperty Name="OrderAmount" ParameterName="OrderAmount" />
+                  <ScalarProperty Name="ItemQuantity" ParameterName="ItemQuantity" />
+                  <ScalarProperty Name="MenuItemID" ParameterName="MenuItemID" />
+                  <ScalarProperty Name="RestaurantID" ParameterName="RestaurantID" />
+                  <ScalarProperty Name="OrderDate" ParameterName="OrderDate" />
+                  <ScalarProperty Name="OrderID" ParameterName="OrderID" />
+                  <ResultBinding Name="OrderID" ColumnName="@OrderID" />
+                </InsertFunction>
+              </ModificationFunctionMapping>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="USP_GetAllOrders" FunctionName="RestaurantModel.Store.USP_GetAllOrders">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RestaurantModel.USP_GetAllOrders_Result">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="RestaurantID" ColumnName="RestaurantID" />
+                <ScalarProperty Name="MenuItemID" ColumnName="MenuItemID" />
+                <ScalarProperty Name="ItemQuantity" ColumnName="ItemQuantity" />
+                <ScalarProperty Name="OrderAmount" ColumnName="OrderAmount" />
+                <ScalarProperty Name="DiningTableID" ColumnName="DiningTableID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="USP_OrderTable" FunctionName="RestaurantModel.Store.USP_OrderTable" />
+          <FunctionImportMapping FunctionImportName="USP_InsertOrder" FunctionName="RestaurantModel.Store.USP_InsertOrder" />
+          <FunctionImportMapping FunctionImportName="Orders_USP_GetAllOrders" FunctionName="RestaurantModel.Store.USP_GetAllOrders" />
+          <FunctionImportMapping FunctionImportName="Order_USP_InsertOrder" FunctionName="RestaurantModel.Store.USP_InsertOrder" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
